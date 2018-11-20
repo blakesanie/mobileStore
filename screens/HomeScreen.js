@@ -14,30 +14,33 @@ import {
 import Product from "./Product";
 import HeaderLeft from "./HeaderLeft";
 import GridView from "react-native-super-grid";
+import { Font } from "expo";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "flex-start",
     alignItems: "flex-start",
-    backgroundColor: "white"
+    backgroundColor: "white",
+    paddingLeft: 10,
+    paddingRight: 10
   },
   gridView: {
     flex: 1,
     width: "100%",
-    paddingTop: 50
   },
   itemContainer: {
     justifyContent: "flex-end",
-    borderRadius: 0,
-    overflow: "hidden"
-    //backgroundColor: '#eee'
-    /*shadowColor: '#000',
+    backgroundColor: "white",
+    borderRadius: 20,
+    shadowColor: "black",
     shadowOffset: { width: 0, height: 0 },
-    backgroundColor: 'white',
     shadowOpacity: 0.1,
-    shadowRadius: 3*/
-    //height: 150
+    shadowRadius: 5
+  },
+  product: {
+    borderRadius: 20,
+    overflow: 'hidden',
   },
   itemName: {
     fontSize: 16,
@@ -54,37 +57,13 @@ const styles = StyleSheet.create({
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("title", "Default Title"),
+      title: navigation.getParam("title", "Home"),
       headerLeft: <HeaderLeft navigation={navigation} />,
-      headerStyle: {}
+      headerBackTitle: "Browse"
     };
   };
 
-  state = {
-    portraitOrientation: this._isPortraitOrientation(),
-    selectedItem: ""
-  };
-
-  _isPortraitOrientation() {
-    var window = Dimensions.get("window");
-    return window.height > window.width;
-  }
-
-  _setOrientation() {
-    this.setState({
-      portraitOrientation: this._isPortraitOrientation()
-    });
-  }
-
   render() {
-    var safePadding = {};
-    if (!this.state.portraitOrientation) {
-      safePadding = {
-        paddingLeft: Expo.Constants.statusBarHeight,
-        paddingRight: Expo.Constants.statusBarHeight
-      };
-    }
-
     const items = [
       {
         name: "Gopro Hero 7",
@@ -137,24 +116,26 @@ export default class HomeScreen extends React.Component {
     ];
     return (
       <View
-        style={[styles.container, safePadding]}
-        onLayout={this._setOrientation.bind(this)}
+        style={[styles.container]}
       >
         <GridView
-          itemDimension={170}
+          itemDimension={150}
           items={items}
           style={styles.gridView}
-          spacing={5}
+          spacing={10}
           renderItem={item => (
             <View style={[styles.itemContainer]}>
-              <Product
-                uri={item.uri}
-                title={item.name}
-                price={item.price}
-                onPress={() => {
-                  console.log(item.name);
-                }}
-              />
+              <View style={styles.product}>
+                <Product
+                  uri={item.uri}
+                  title={item.name}
+                  price={item.price}
+                  navigation={this.props.navigation}
+                  onPress={() => {
+                    console.log(item.name);
+                  }}
+                />
+              </View>
             </View>
           )}
         />

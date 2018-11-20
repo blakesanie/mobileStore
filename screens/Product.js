@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   View,
   Button,
-  Dimensions
+  Dimensions,
+  Animated
 } from "react-native";
 
 const styles = StyleSheet.create({
@@ -17,12 +18,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 0, //20,\
-    backgroundColor: "black"
+    backgroundColor: "black",
   },
   whiteCover: {
     flex: 1,
     backgroundColor: "white",
-    opacity: 0.9,
+    opacity: 1, //.9
     padding: 10
   },
   image: {
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     height: "100%",
     width: "100%",
-    backgroundColor: "rgba(0,0,0,0.8)",
+    backgroundColor: "rgba(0,0,0,0.8)", //.8
     justifyContent: "center",
     alignItems: "center"
   },
@@ -44,74 +45,88 @@ const styles = StyleSheet.create({
     opacity: 0
   },
   text: {
-    color: "white"
+    color: "white",
   },
   title: {
-    fontSize: 20
+    fontSize: 22,
+    fontFamily: 'light'
   },
   price: {
-    fontSize: 14
+    fontSize: 16,
+    fontFamily: 'light',
+    marginTop: 5
   },
   button: {
-    width: 60,
-    height: 30,
+    width: 80,
+    height: 40,
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 15,
+    borderRadius: 20,
     overflow: "hidden",
     backgroundColor: "white",
     marginTop: 20
   },
   buttonLabel: {
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: 'light'
   }
 });
 
 export default class Product extends React.Component {
   state = {
-    coverOpacity: 0
+    coverOpacity: new Animated.Value(0),
+    coverHidden: true
   };
 
   _timer = null;
 
   _fadeIn() {
+    this.setState({
+      coverHidden: false
+    });
+    this._fadeTimer = setTimeout(() => {
+      this._fadeOut();
+  }, 5000);
+    console.log("in");
     Animated.timing(this.state.coverOpacity, {
       toValue: 1,
-      duration: 500
+      duration: 150,
+      useNativeDriver: true // <-- Add this
     }).start();
   }
 
   _fadeOut() {
+    this._fadeTimer = null;
+    this.setState({
+      coverHidden: true
+    });
+    console.log("out");
     Animated.timing(this.state.coverOpacity, {
-      toValue: 1,
-      duration: 500
+      toValue: 0,
+      duration: 150,
+      useNativeDriver: true
     }).start();
   }
 
   _toggleVisibility() {
-    if (this.state.coverOpacity == 0) {
-      this._timer = setTimeout(() => {
+    if (this.state.coverHidden == true) {
+      /*this._timer = setTimeout(() => {
         this._toggleVisibility();
-      }, 10000);
-      this.setState({
-        coverOpacity: 1
-      });
-      console.log("yes");
+    }, 10000);*/
+      this._fadeIn();
     } else {
-      clearInterval(this._timer);
-      this._timer = null;
-      this.setState({
-        coverOpacity: 0
-      });
-      console.log("no");
+      /*clearInterval(this._timer);
+      this._timer = null;*/
+      this._fadeOut();
     }
   }
 
   render() {
     var pointerEvents = "none";
-    if (this.state.coverOpacity > 0) {
+    if (this.state.coverHidden == false) {
       pointerEvents = "auto";
     }
+    console.log(pointerEvents);
     return (
       <View style={styles.container}>
         <View style={styles.whiteCover}>
@@ -130,9 +145,18 @@ export default class Product extends React.Component {
             this.props.onPress();
           }}
         />
-        <View
+        <Animated.View
           pointerEvents={pointerEvents}
-          style={[styles.cover, { opacity: this.state.coverOpacity }]}
+          style={[
+            styles.cover,
+            {
+              opacity: this.state.coverOpacity._value,
+              opacity: this.state.coverOpacity.interpolate({
+                inputRange: [0, 1],
+                outputRange: [0, 1]
+              })
+            }
+          ]}
         >
           <Text style={[styles.text, styles.title]}>{this.props.title}</Text>
           <Text style={[styles.text, styles.price]}>
@@ -150,12 +174,14 @@ export default class Product extends React.Component {
               this._timer = setTimeout(() => {
                 this._toggleVisibility();
               }, 10000);
-              console.log("buy");
+              this.props.navigation.navigate("More", {
+                title: this.props.title
+              });
             }}
           >
-            <Text style={[styles.buttonLabel]}>Buy</Text>
+            <Text style={[styles.buttonLabel]}>View</Text>
           </TouchableOpacity>
-        </View>
+        </Animated.View>
       </View>
     );
   }

@@ -34,7 +34,7 @@ export default class HeaderLeft extends React.Component {
           this.props.navigation.openDrawer();
         }}
       >
-        <Ionicons name="logo-buffer" size={32} color="#CCC" />
+        <Ionicons name="ios-list" size={32} color="#000" />
       </TouchableOpacity>
     );
   }
