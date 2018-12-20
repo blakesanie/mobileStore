@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 0, //20,\
-    backgroundColor: "black",
+    backgroundColor: "black"
   },
   whiteCover: {
     flex: 1,
@@ -45,15 +45,15 @@ const styles = StyleSheet.create({
     opacity: 0
   },
   text: {
-    color: "white",
+    color: "white"
   },
   title: {
     fontSize: 22,
-    fontFamily: 'light'
+    fontFamily: "light"
   },
   price: {
     fontSize: 16,
-    fontFamily: 'light',
+    fontFamily: "light",
     marginTop: 5
   },
   button: {
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   buttonLabel: {
     fontSize: 20,
-    fontFamily: 'light'
+    fontFamily: "light"
   }
 });
 
@@ -86,8 +86,7 @@ export default class Product extends React.Component {
     });
     this._fadeTimer = setTimeout(() => {
       this._fadeOut();
-  }, 5000);
-    console.log("in");
+    }, 5000);
     Animated.timing(this.state.coverOpacity, {
       toValue: 1,
       duration: 150,
@@ -100,7 +99,6 @@ export default class Product extends React.Component {
     this.setState({
       coverHidden: true
     });
-    console.log("out");
     Animated.timing(this.state.coverOpacity, {
       toValue: 0,
       duration: 150,
@@ -126,7 +124,6 @@ export default class Product extends React.Component {
     if (this.state.coverHidden == false) {
       pointerEvents = "auto";
     }
-    console.log(pointerEvents);
     return (
       <View style={styles.container}>
         <View style={styles.whiteCover}>
@@ -160,7 +157,7 @@ export default class Product extends React.Component {
         >
           <Text style={[styles.text, styles.title]}>{this.props.title}</Text>
           <Text style={[styles.text, styles.price]}>
-            {"$" + this.props.price}
+            {"$" + this.props.price + "+"}
           </Text>
           <TouchableOpacity
             style={styles.touchable}
@@ -175,7 +172,11 @@ export default class Product extends React.Component {
                 this._toggleVisibility();
               }, 10000);
               this.props.navigation.navigate("More", {
-                title: this.props.title
+                title: this.props.title,
+                price: this.props.price,
+                //placeholder for now
+                amazonUrl:
+                  "https://www.amazon.com/GoPro-HERO7-Black-Waterproof-Streaming-Stabilization/dp/B07GDGZCCH"
               });
             }}
           >

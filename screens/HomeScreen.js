@@ -8,152 +8,113 @@ import {
   TouchableOpacity,
   View,
   Button,
-  SafeAreaView,
-  Dimensions
+  WebView,
+  Dimensions,
+  SafeAreaView
 } from "react-native";
-import Product from "./Product";
 import HeaderLeft from "./HeaderLeft";
-import GridView from "react-native-super-grid";
-import { Font } from "expo";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
-    backgroundColor: "white",
-    paddingLeft: 10,
-    paddingRight: 10
+    flex: 1
   },
-  gridView: {
-    flex: 1,
+  innerContainer: {},
+  cover: {},
+  image: {
+    position: "absolute",
     width: "100%",
+    height: "100%"
   },
-  itemContainer: {
-    justifyContent: "flex-end",
-    backgroundColor: "white",
-    borderRadius: 20,
-    shadowColor: "black",
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5
+  textWrapper: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
   },
-  product: {
-    borderRadius: 20,
-    overflow: 'hidden',
+  text: {
+    fontSize: 40,
+    fontFamily: "normal",
+    color: "black",
+    paddingLeft: 50,
+    paddingRight: 50,
+    textAlign: "center",
+    lineHeight: 60
   },
-  itemName: {
-    fontSize: 16,
-    color: "#fff",
-    fontWeight: "600"
+  headerLeft: {
+    maxWidth: 60,
+    maxHeight: 40
   },
-  itemCode: {
-    fontWeight: "600",
-    fontSize: 12,
-    color: "#fff"
+  something: {
+    padding: 20,
+    textAlign: "center",
+    fontSize: 24,
+    fontFamily: "light",
+    height: 900,
+    backgroundColor: "white"
   }
 });
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
-      title: navigation.getParam("title", "Home"),
-      headerLeft: <HeaderLeft navigation={navigation} />,
-      headerBackTitle: "Browse"
+      header: null
     };
   };
 
+  state = {
+    scrollPos: 0
+  };
+
   render() {
-    const items = [
-      {
-        name: "Gopro Hero 7",
-        price: 300,
-        uri:
-          "https://d1hbm078fhnj3b.cloudfront.net/product.php?image_id=104310&w=760&h=570"
-      },
-      {
-        name: "iPhone XR",
-        price: 650,
-        uri:
-          "https://store.storeimages.cdn-apple.com/4981/as-images.apple.com/is/image/AppleInc/aos/published/images/i/ph/iphone/xr/iphone-xr-select-201809?wid=379&hei=330&fmt=jpeg&qlt=95&op_usm=0.5,0.5&.v=1536615930003"
-      },
-      {
-        name: "Canon EOS R",
-        price: 3000,
-        uri:
-          "https://www.galaxyandorra.es/9165-large_default/canon-eos-r-rf-24-1054-adapt-ef-rf-garantia-espanola.jpg"
-      },
-      {
-        name: "Boosted Mini S",
-        price: 600,
-        uri:
-          "https://awesomestufftobuy.com/wp-content/uploads/2018/04/boosted-board-mini-s-electric-skateboard.jpg"
-      },
-      {
-        name: "JBL Flip 3",
-        price: 120,
-        uri:
-          "http://brazilcenterusa.com/wp-content/uploads/2017/10/10659802.jpg"
-      },
-      {
-        name: "Powerbeats 2",
-        price: 200,
-        uri:
-          "https://www.itechdeals.com/media/catalog/product/cache/1/image/650x650/9df78eab33525d08d6e5fb8d27136e95/6/1/61kodjdptyl._sl1500__5.jpg"
-      },
-      {
-        name: "Macbook Pro",
-        price: 1600,
-        uri:
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9VREnksZ1la5YiEd97rk2g92z_wl7YGtZ31wFICToL_urWUPv"
-      },
-      {
-        name: "Ledger Wallet",
-        price: 200,
-        uri:
-          "https://cdn.shopify.com/s/files/1/2974/4858/products/nano-s-8_3x_grande_952f20b0-29bc-42b8-bcd5-1645ea2c4f18_767x.png?v=1532074689"
-      }
-    ];
+    var coverHeight = Dimensions.get("window").height - 300;
+    var coverStyles = {
+      height: coverHeight
+    };
+    if (this.state.scrollPos < coverHeight) {
+      coverStyles = {
+        height: coverHeight - 1 * this.state.scrollPos,
+        marginTop: this.state.scrollPos
+      };
+    }
     return (
-      <View
-        style={[styles.container]}
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.innerContainer}
+        scrollEventThrottle={16}
+        onScroll={event => {
+          var y = event.nativeEvent.contentOffset.y;
+          this.setState({
+            scrollPos: y
+          });
+        }}
       >
-        <GridView
-          itemDimension={150}
-          items={items}
-          style={styles.gridView}
-          spacing={10}
-          renderItem={item => (
-            <View style={[styles.itemContainer]}>
-              <View style={styles.product}>
-                <Product
-                  uri={item.uri}
-                  title={item.name}
-                  price={item.price}
-                  navigation={this.props.navigation}
-                  onPress={() => {
-                    console.log(item.name);
-                  }}
-                />
-              </View>
-            </View>
-          )}
-        />
-      </View>
+        <View style={[styles.cover, coverStyles]}>
+          <Image
+            style={styles.image}
+            source={require("../assets/macbook.jpg")}
+            resizeMode="cover"
+          />
+          <View
+            style={[
+              styles.textWrapper,
+              { opacity: 1 - this.state.scrollPos / (coverHeight - 240) }
+            ]}
+          >
+            <Text style={styles.text}>
+              Hand picked products for the classiest of tech lovers
+            </Text>
+          </View>
+        </View>
+        <Text style={styles.something}>Browse Categories</Text>
+      </ScrollView>
     );
   }
 }
 
-/*<Button
-  title="go to drawer"
-  onPress={() => {
-    this.props.navigation.openDrawer();
-  }}
+/*
+<Text style={styles.label}>Info</Text>
+<Carousel
+  render={this.renderInfo.bind(this)}
+  carouselInterval={this.state.carouselInterval}
+  data={this.state.info}
 />
-<Text>{this.props.navigation.getParam("title", "nothing passed")}</Text>
-<Button
-  title="go to more"
-  onPress={() => {
-    this.props.navigation.navigate("More");
-  }}
-/>*/
+*/

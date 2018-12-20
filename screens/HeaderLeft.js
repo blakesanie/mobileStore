@@ -11,7 +11,6 @@ import {
   SafeAreaView,
   Dimensions
 } from "react-native";
-import Product from "./Product";
 import GridView from "react-native-super-grid";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -26,15 +25,15 @@ const styles = StyleSheet.create({
 
 export default class HeaderLeft extends React.Component {
   render() {
-    console.log(this.props);
+    //console.log(this.props);
     return (
       <TouchableOpacity
-        style={styles.container}
+        style={[styles.container, this.props.style]}
         onPress={() => {
           this.props.navigation.openDrawer();
         }}
       >
-        <Ionicons name="ios-list" size={32} color="#000" />
+        <Ionicons name="ios-list" size={40} color="#000" />
       </TouchableOpacity>
     );
   }

@@ -9,10 +9,13 @@ export default class App extends Component {
   };
 
   async componentDidMount() {
+    /*Expo.ScreenOrientation.allowAsync(
+      Expo.ScreenOrientation.Orientation.PORTRAIT
+  );*/
     await Font.loadAsync({
-      normal: require("./assets/fonts/Rubik-Medium.ttf"),
-      bold: require("./assets/fonts/Rubik-Bold.ttf"),
-      light: require("./assets/fonts/Rubik-Light.ttf")
+      "normal": require("./assets/fonts/Rubik-Medium.ttf"),
+      "bold": require("./assets/fonts/Rubik-Bold.ttf"),
+      "light": require("./assets/fonts/Rubik-Light.ttf"),
     });
     this.setState({
       fontLoaded: true

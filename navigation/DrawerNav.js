@@ -1,15 +1,16 @@
 import React, { Component } from "react";
 import { Platform, StyleSheet, Text, View, Dimensions } from "react-native";
 import { createDrawerNavigator } from "react-navigation";
-import StackNav from './StackNav';
+import ModalNav from './ModalNav';
 import Drawer from '../screens/Drawer';
 import HomeScreen from '../screens/HomeScreen';
 
 export default createDrawerNavigator(
   {
-    Home: StackNav,
+    Home: ModalNav,
   },
   {
     contentComponent: Drawer,
+    drawerWidth: 280
   }
 );
