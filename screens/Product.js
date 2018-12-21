@@ -24,11 +24,13 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     opacity: 1, //.9
-    padding: 10
+    padding: 5
   },
   image: {
     width: "100%",
-    aspectRatio: 1
+    height: "100%",
+    aspectRatio: 1,
+    borderRadius: 10
   },
   cover: {
     position: "absolute",
@@ -119,21 +121,44 @@ export default class Product extends React.Component {
     }
   }
 
+  _navigateToMore() {
+    this.props.navigation.navigate("More", {
+      title: this.props.title,
+      price: this.props.price,
+      //placeholder for now
+      amazonUrl:
+        "https://www.amazon.com/GoPro-HERO7-Black-Waterproof-Streaming-Stabilization/dp/B07GDGZCCH"
+    });
+  }
+
+  _navigateToCat() {
+    this.props.navigation.navigate("Browse", {
+      title: this.props.title
+    });
+  }
+
   render() {
     var pointerEvents = "none";
     if (this.state.coverHidden == false) {
       pointerEvents = "auto";
     }
+    var source = this.props.source || { uri: this.props.uri };
+    var price = null;
+    if (this.props.price) {
+      price = (
+        <Text style={[styles.text, styles.price]}>
+          {"$" + this.props.price + "+"}
+        </Text>
+      );
+    }
+    var resizeMode = "contain";
+    if (this.props.type == "cat") {
+      resizeMode = "cover";
+    }
     return (
       <View style={styles.container}>
         <View style={styles.whiteCover}>
-          <Image
-            style={styles.image}
-            source={{
-              uri: this.props.uri
-            }}
-            resizeMode="contain"
-          />
+          <Image style={styles.image} source={source} resizeMode={resizeMode} />
         </View>
         <TouchableOpacity
           style={styles.touchable}
@@ -156,9 +181,7 @@ export default class Product extends React.Component {
           ]}
         >
           <Text style={[styles.text, styles.title]}>{this.props.title}</Text>
-          <Text style={[styles.text, styles.price]}>
-            {"$" + this.props.price + "+"}
-          </Text>
+          {price}
           <TouchableOpacity
             style={styles.touchable}
             onPress={() => {
@@ -171,13 +194,11 @@ export default class Product extends React.Component {
               this._timer = setTimeout(() => {
                 this._toggleVisibility();
               }, 10000);
-              this.props.navigation.navigate("More", {
-                title: this.props.title,
-                price: this.props.price,
-                //placeholder for now
-                amazonUrl:
-                  "https://www.amazon.com/GoPro-HERO7-Black-Waterproof-Streaming-Stabilization/dp/B07GDGZCCH"
-              });
+              if (this.props.type == "cat") {
+                this._navigateToCat();
+              } else {
+                this._navigateToMore();
+              }
             }}
           >
             <Text style={[styles.buttonLabel]}>View</Text>

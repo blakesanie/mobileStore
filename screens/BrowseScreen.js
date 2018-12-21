@@ -142,6 +142,7 @@ export default class BrowseScreen extends React.Component {
                   uri={item.uri}
                   title={item.name}
                   price={item.price}
+                  type="product"
                   navigation={this.props.navigation}
                   onPress={() => {
                     //console.log(item.name);
