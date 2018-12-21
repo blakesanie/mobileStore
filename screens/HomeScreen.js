@@ -141,6 +141,15 @@ export default class HomeScreen extends React.Component {
         marginTop: this.state.scrollPos
       };
     }
+    var headerLeft = null;
+    if (this.state.scrollPos < coverHeight - 100) {
+      headerLeft = (
+        <HeaderLeft
+          navigation={this.props.navigation}
+          style={{ opacity: 0.3 }}
+        />
+      );
+    }
     return (
       <View style={{ flex: 1 }}>
         <ScrollView
@@ -194,9 +203,7 @@ export default class HomeScreen extends React.Component {
             )}
           />
         </ScrollView>
-        <SafeAreaView style={styles.safeArea}>
-          <HeaderLeft navigation={this.props.navigation} />
-        </SafeAreaView>
+        <SafeAreaView style={styles.safeArea}>{headerLeft}</SafeAreaView>
       </View>
     );
   }

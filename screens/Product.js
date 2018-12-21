@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
     opacity: 1, //.9
-    padding: 5
+    padding: 10
   },
   image: {
     width: "100%",

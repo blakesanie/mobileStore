@@ -32,14 +32,14 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   icon: {
-    width: 50,
+    width: 30,
     alignItems: "center",
     justifyContent: "center"
   },
   label: {
     paddingLeft: 30,
     fontFamily: "normal",
-    fontSize: 20
+    fontSize: 18
   }
 });
 
@@ -47,14 +47,14 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>BitBite</Text>
+        <Text style={styles.title}>App Name</Text>
         <DrawerItem
           category="Home"
           icon="ios-home"
           navigation={this.props.navigation}
         />
         <DrawerItem
-          category="Wearable Tech"
+          category="Accessories"
           icon="ios-watch"
           navigation={this.props.navigation}
         />
@@ -69,8 +69,8 @@ export default class HomeScreen extends React.Component {
           navigation={this.props.navigation}
         />
         <DrawerItem
-          category="Utilities"
-          icon="md-calculator"
+          category="Music"
+          icon="ios-musical-notes"
           navigation={this.props.navigation}
         />
         <DrawerItem
@@ -86,6 +86,11 @@ export default class HomeScreen extends React.Component {
         <DrawerItem
           category="Photo / Video"
           icon="ios-camera"
+          navigation={this.props.navigation}
+        />
+        <DrawerItem
+          category="Computing"
+          icon="ios-laptop"
           navigation={this.props.navigation}
         />
         <DrawerItem
@@ -123,7 +128,7 @@ class DrawerItem extends React.Component {
         }}
       >
         <View style={styles.icon}>
-          <Ionicons name={this.props.icon} size={40} color="#000" />
+          <Ionicons name={this.props.icon} size={30} color="#000" />
         </View>
         <Text style={styles.label}>{this.props.category}</Text>
       </TouchableOpacity>
