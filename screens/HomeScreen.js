@@ -56,7 +56,9 @@ const styles = StyleSheet.create({
   },
   gridView: {
     flex: 1,
-    width: "100%"
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center"
   },
   itemContainer: {
     justifyContent: "flex-end",

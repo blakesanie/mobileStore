@@ -56,8 +56,9 @@ const styles = StyleSheet.create({
 
 export default class BrowseScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
+    var cat = navigation.getParam("title", null);
     return {
-      title: navigation.getParam("title", "Home"),
+      title: cat,
       headerLeft: <HeaderLeft navigation={navigation} />,
       headerBackTitle: "Browse"
     };
@@ -69,15 +70,19 @@ export default class BrowseScreen extends React.Component {
         "https://facebook.github.io/react-native/movies.json"
       );
       let responseJson = await response.json();
-      console.log(responseJson.movies);
+      //console.log(responseJson.movies);
     } catch (error) {
       console.error(error);
     }
   }
 
-  render() {
-    this._testAPI();
+  componentWillMount() {
+    console.log("mount");
+  }
 
+  render() {
+    //this._testAPI();
+    console.log("render");
     const items = [
       {
         name: "Gopro Hero 7",
