@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, Animated, Easing } from "react-native";
 import {
   createStackNavigator,
   createBottomTabNavigator
@@ -21,14 +21,36 @@ import { Font } from "expo";
 export default createStackNavigator(
   {
     Home: HomeScreen,
-    Browse: Mobile,
+    Mobile: Mobile,
+    Accessories: Accessories,
+    Computing: Computing,
+    Gaming: Gaming,
+    SmartHome: SmartHome,
+    Gadgets: Gadgets,
+    Music: Music,
+    PhotoVideo: PhotoVideo,
+    Gifts: Gifts,
     More: MoreScreen
   },
   {
     initialRoute: "Home",
+    headerMode: "screen",
     transitionConfig: () => ({
-      screenInterpolator: props => {
-        return fade(props);
+      transitionSpec: {
+        duration: 400,
+        easing: Easing.out(Easing.poly(4)),
+        timing: Animated.timing,
+        useNativeDriver: true
+      },
+      screenInterpolator: ({ position, scene }) => {
+        const { index } = scene;
+
+        const opacity = position.interpolate({
+          inputRange: [index - 1, index],
+          outputRange: [0, 1]
+        });
+
+        return { opacity };
       }
     }),
     navigationOptions: () => {
@@ -48,20 +70,22 @@ export default createStackNavigator(
 );
 
 const fade = props => {
-  const { position, scene } = props;
-
-  const index = scene.index;
-
-  const translateX = 0;
-  const translateY = 0;
-
-  const opacity = position.interpolate({
-    inputRange: [index - 0.7, index, index + 0.7],
-    outputRange: [0.3, 1, 0.3]
-  });
-
   return {
-    opacity,
-    transform: [{ translateX }, { translateY }]
+    transitionSpec: {
+      duration: 3000,
+      easing: Easing.out(Easing.poly(4)),
+      timing: Animated.timing,
+      useNativeDriver: true
+    },
+    screenInterpolator: ({ position, scene }) => {
+      const { index } = scene;
+
+      const opacity = position.interpolate({
+        inputRange: [index - 1, index],
+        outputRange: [0, 1]
+      });
+
+      return { opacity };
+    }
   };
 };

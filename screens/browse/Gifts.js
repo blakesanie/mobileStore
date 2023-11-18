@@ -9,10 +9,11 @@ export default class Gifts extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Gifts",
-      headerLeft: <HeaderLeft navigation={navigation} />
+      headerLeft: <HeaderLeft navigation={navigation} />,
+      headerBackTitle: null
     };
   };
   render() {
-    return <BrowseScreen category="gifts" />;
+    return <BrowseScreen category="gifts" navigation={this.props.navigation} />;
   }
 }

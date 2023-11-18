@@ -9,10 +9,13 @@ export default class Computing extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Computing",
-      headerLeft: <HeaderLeft navigation={navigation} />
+      headerLeft: <HeaderLeft navigation={navigation} />,
+      headerBackTitle: null
     };
   };
   render() {
-    return <BrowseScreen category="computing" />;
+    return (
+      <BrowseScreen category="computing" navigation={this.props.navigation} />
+    );
   }
 }

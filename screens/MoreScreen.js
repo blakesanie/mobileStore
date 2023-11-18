@@ -17,7 +17,7 @@ import HeaderRight from "./HeaderRight";
 const styles = StyleSheet.create({
   title: {
     fontFamily: "normal",
-    fontSize: 20
+    fontSize: 18
   },
   container: {
     flex: 1,
@@ -62,8 +62,8 @@ const styles = StyleSheet.create({
 
 export default class MoreScreen extends React.Component {
   static navigationOptions = ({ navigation }) => {
-    navigation.getParam("amazonUrl", "error");
     return {
+      headerBackTitle: "blake",
       headerTitle: (
         <Text style={styles.title}>
           {navigation.getParam("title", "error")}
@@ -165,6 +165,7 @@ export default class MoreScreen extends React.Component {
           key={i}
           style={styles.image}
           source={{ uri: version.imageUrl }}
+          resizeMode={"contain"}
         />
         <Text style={styles.versionName}>{version.name}</Text>
         <Text style={styles.price}>{"$" + version.price}</Text>

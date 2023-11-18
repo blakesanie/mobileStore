@@ -8,14 +8,18 @@ import {
   TouchableOpacity,
   View,
   Button,
-  SafeAreaView
+  SafeAreaView,
+  Dimensions
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "center",
+    flex: 1
+  },
+  content: {
+    paddingTop: 50,
+    paddingBottom: 50,
     alignItems: "center"
   },
   title: {
@@ -47,57 +51,69 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>App Name</Text>
-        <DrawerItem
-          category="Home"
-          icon="ios-home"
-          navigation={this.props.navigation}
-        />
-        <DrawerItem
-          category="Accessories"
-          icon="ios-watch"
-          navigation={this.props.navigation}
-        />
-        <DrawerItem
-          category="Smart Home"
-          icon="ios-bulb"
-          navigation={this.props.navigation}
-        />
-        <DrawerItem
-          category="Gadgets"
-          icon="ios-magnet"
-          navigation={this.props.navigation}
-        />
-        <DrawerItem
-          category="Music"
-          icon="ios-musical-notes"
-          navigation={this.props.navigation}
-        />
-        <DrawerItem
-          category="Gaming"
-          icon="logo-game-controller-a"
-          navigation={this.props.navigation}
-        />
-        <DrawerItem
-          category="Mobile"
-          icon="md-phone-portrait"
-          navigation={this.props.navigation}
-        />
-        <DrawerItem
-          category="Photo / Video"
-          icon="ios-camera"
-          navigation={this.props.navigation}
-        />
-        <DrawerItem
-          category="Computing"
-          icon="ios-laptop"
-          navigation={this.props.navigation}
-        />
-        <DrawerItem
-          category="Gifts"
-          icon="ios-gift"
-          navigation={this.props.navigation}
-        />
+        <ScrollView style={{ flex: 1 }} contentContainerStyle={styles.content}>
+          <Text style={styles.title}>App Name</Text>
+          <DrawerItem
+            category="Home"
+            icon="ios-home"
+            screen="Home"
+            navigation={this.props.navigation}
+          />
+          <DrawerItem
+            category="Accessories"
+            icon="ios-watch"
+            screen="Accessories"
+            navigation={this.props.navigation}
+          />
+          <DrawerItem
+            category="Smart Home"
+            icon="ios-bulb"
+            screen="SmartHome"
+            navigation={this.props.navigation}
+          />
+          <DrawerItem
+            category="Gadgets"
+            icon="ios-magnet"
+            screen="Gadgets"
+            navigation={this.props.navigation}
+          />
+          <DrawerItem
+            category="Music"
+            icon="ios-musical-notes"
+            screen="Music"
+            navigation={this.props.navigation}
+          />
+          <DrawerItem
+            category="Gaming"
+            icon="logo-game-controller-a"
+            screen="Gaming"
+            navigation={this.props.navigation}
+          />
+          <DrawerItem
+            category="Mobile"
+            icon="md-phone-portrait"
+            screen="Mobile"
+            navigation={this.props.navigation}
+          />
+          <DrawerItem
+            category="Photo / Video"
+            icon="ios-camera"
+            screen="PhotoVideo"
+            navigation={this.props.navigation}
+          />
+          <DrawerItem
+            category="Computing"
+            icon="ios-laptop"
+            screen="Computing"
+            navigation={this.props.navigation}
+          />
+          <DrawerItem
+            category="Gifts"
+            icon="ios-gift"
+            screen="Gifts"
+            navigation={this.props.navigation}
+          />
+        </ScrollView>
       </SafeAreaView>
     );
   }
@@ -105,21 +121,13 @@ export default class HomeScreen extends React.Component {
 
 class DrawerItem extends React.Component {
   navigateToCategory(category) {
-    if (this.props.category == "Home") {
-      this.props.navigation.navigate("Home", {
-        title: category
-      });
-    } else {
-      this.props.navigation.navigate("Browse", {
-        title: category
-      });
-    }
+    this.props.navigation.navigate(this.props.screen);
     this.props.navigation.closeDrawer();
   }
 
   render() {
     var style = [styles.row];
-    if (this.props.category == "Home") style.push({ marginBottom: 30 });
+    if (this.props.category == "Home") style.push({ marginBottom: 15 });
     return (
       <TouchableOpacity
         style={style}

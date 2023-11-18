@@ -9,10 +9,13 @@ export default class Gaming extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Gaming",
-      headerLeft: <HeaderLeft navigation={navigation} />
+      headerLeft: <HeaderLeft navigation={navigation} />,
+      headerBackTitle: null
     };
   };
   render() {
-    return <BrowseScreen category="gaming" />;
+    return (
+      <BrowseScreen category="gaming" navigation={this.props.navigation} />
+    );
   }
 }

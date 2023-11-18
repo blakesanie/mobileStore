@@ -9,10 +9,13 @@ export default class Gadgets extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Gadgets",
-      headerLeft: <HeaderLeft navigation={navigation} />
+      headerLeft: <HeaderLeft navigation={navigation} />,
+      headerBackTitle: null
     };
   };
   render() {
-    return <BrowseScreen category="gadgets" />;
+    return (
+      <BrowseScreen category="gadgets" navigation={this.props.navigation} />
+    );
   }
 }

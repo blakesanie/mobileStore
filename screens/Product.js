@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     marginTop: 20
   },
   buttonLabel: {
-    fontSize: 20,
+    fontSize: 18,
     fontFamily: "light"
   }
 });
@@ -132,9 +132,7 @@ export default class Product extends React.Component {
   }
 
   _navigateToCat() {
-    this.props.navigation.navigate("Browse", {
-      title: this.props.title
-    });
+    this.props.navigation.navigate(this.props.screen);
   }
 
   render() {
@@ -155,6 +153,7 @@ export default class Product extends React.Component {
     if (this.props.type == "cat") {
       resizeMode = "cover";
     }
+    var fontSize = { fontSize: 12 + Dimensions.get("window").width * 0.02 };
     return (
       <View style={styles.container}>
         <View style={styles.whiteCover}>
@@ -180,7 +179,9 @@ export default class Product extends React.Component {
             }
           ]}
         >
-          <Text style={[styles.text, styles.title]}>{this.props.title}</Text>
+          <Text style={[styles.text, styles.title, fontSize]}>
+            {this.props.title}
+          </Text>
           {price}
           <TouchableOpacity
             style={styles.touchable}

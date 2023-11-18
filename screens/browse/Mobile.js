@@ -9,10 +9,13 @@ export default class Mobile extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Mobile",
-      headerLeft: <HeaderLeft navigation={navigation} />
+      headerLeft: <HeaderLeft navigation={navigation} />,
+      headerBackTitle: null
     };
   };
   render() {
-    return <BrowseScreen category="mobile" />;
+    return (
+      <BrowseScreen category="mobile" navigation={this.props.navigation} />
+    );
   }
 }

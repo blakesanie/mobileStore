@@ -59,8 +59,7 @@ export default class BrowseScreen extends React.Component {
     var cat = navigation.getParam("title", null);
     return {
       title: cat,
-      headerLeft: <HeaderLeft navigation={navigation} />,
-      headerBackTitle: "Browse"
+      headerLeft: <HeaderLeft navigation={navigation} />
     };
   };
 
@@ -136,7 +135,7 @@ export default class BrowseScreen extends React.Component {
     return (
       <View style={[styles.container]}>
         <GridView
-          itemDimension={150}
+          itemDimension={Dimensions.get("window").width / 3}
           items={items}
           style={styles.gridView}
           spacing={10}

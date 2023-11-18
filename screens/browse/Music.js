@@ -9,10 +9,11 @@ export default class Music extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Music",
-      headerLeft: <HeaderLeft navigation={navigation} />
+      headerLeft: <HeaderLeft navigation={navigation} />,
+      headerBackTitle: null
     };
   };
   render() {
-    return <BrowseScreen category="music" />;
+    return <BrowseScreen category="music" navigation={this.props.navigation} />;
   }
 }

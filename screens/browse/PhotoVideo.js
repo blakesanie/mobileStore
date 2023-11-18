@@ -9,10 +9,13 @@ export default class PhotoVideo extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Photo / Video",
-      headerLeft: <HeaderLeft navigation={navigation} />
+      headerLeft: <HeaderLeft navigation={navigation} />,
+      headerBackTitle: null
     };
   };
   render() {
-    return <BrowseScreen category="photovideo" />;
+    return (
+      <BrowseScreen category="photovideo" navigation={this.props.navigation} />
+    );
   }
 }

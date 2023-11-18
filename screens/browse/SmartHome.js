@@ -9,10 +9,13 @@ export default class SmartHome extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Smart Home",
-      headerLeft: <HeaderLeft navigation={navigation} />
+      headerLeft: <HeaderLeft navigation={navigation} />,
+      headerBackTitle: null
     };
   };
   render() {
-    return <BrowseScreen category="smarthome" />;
+    return (
+      <BrowseScreen category="smarthome" navigation={this.props.navigation} />
+    );
   }
 }

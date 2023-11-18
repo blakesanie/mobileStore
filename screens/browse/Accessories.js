@@ -9,10 +9,14 @@ export default class Accessories extends React.Component {
   static navigationOptions = ({ navigation }) => {
     return {
       title: "Accessories",
-      headerLeft: <HeaderLeft navigation={navigation} />
+      headerLeft: <HeaderLeft navigation={navigation} />,
+      headerBackTitle: null,
+      headerBackTitle: null
     };
   };
   render() {
-    return <BrowseScreen category="accessories" />;
+    return (
+      <BrowseScreen category="accessories" navigation={this.props.navigation} />
+    );
   }
 }

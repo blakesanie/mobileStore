@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white"
   },
   innerContainer: {
-    paddingBottom: 20
+    paddingBottom: 50
   },
   cover: {},
   image: {
@@ -36,19 +36,19 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   text: {
-    fontSize: 40,
+    fontSize: 32,
     fontFamily: "normal",
     color: "black",
     paddingLeft: 50,
     paddingRight: 50,
     textAlign: "center",
-    lineHeight: 60
+    lineHeight: 50
   },
   headerLeft: {
     maxWidth: 60,
     maxHeight: 40
   },
-  something: {
+  label: {
     textAlign: "center",
     fontSize: 24,
     fontFamily: "light",
@@ -84,6 +84,11 @@ const styles = StyleSheet.create({
   },
   safeArea: {
     position: "absolute"
+  },
+  gifts: {
+    flexDirection: "row",
+    flexWrap: "nowrap",
+    justifyContent: "center"
   }
 });
 
@@ -97,43 +102,53 @@ export default class HomeScreen extends React.Component {
   state = {
     scrollPos: 0
   };
-
+  i = 0;
   render() {
+    console.log(this.i);
+    this.i++;
     const categories = [
       {
         name: "Photo / Video",
-        source: require("../assets/photoVideo.jpg")
+        source: require("../assets/photoVideo.jpg"),
+        screen: "PhotoVideo"
       },
       {
         name: "Gadgets",
-        source: require("../assets/gadgets.jpg")
+        source: require("../assets/gadgets.jpg"),
+        screen: "Gadgets"
       },
       {
         name: "Accessories",
-        source: require("../assets/wearableTech.jpg")
+        source: require("../assets/wearableTech.jpg"),
+        screen: "Accessories"
       },
       {
         name: "Mobile",
-        source: require("../assets/mobile.jpg")
+        source: require("../assets/mobile.jpg"),
+        screen: "Mobile"
       },
       {
         name: "Smart Home",
-        source: require("../assets/smartHome.jpg")
+        source: require("../assets/smartHome.jpg"),
+        screen: "SmartHome"
       },
       {
         name: "Music",
-        source: require("../assets/music.jpg")
+        source: require("../assets/music.jpg"),
+        screen: "Music"
       },
       {
         name: "Gaming",
-        source: require("../assets/gaming.jpg")
+        source: require("../assets/gaming.jpg"),
+        screen: "Gaming"
       },
       {
         name: "Computing",
-        source: require("../assets/computing.jpg")
+        source: require("../assets/computing.jpg"),
+        screen: "Computing"
       }
     ];
-    var coverHeight = Dimensions.get("window").height - 300;
+    var coverHeight = Math.max(Dimensions.get("window").height - 300, 400);
     var coverStyles = {
       height: coverHeight
     };
@@ -144,7 +159,7 @@ export default class HomeScreen extends React.Component {
       };
     }
     var headerLeft = null;
-    if (this.state.scrollPos < coverHeight - 100) {
+    if (this.state.scrollPos < coverHeight) {
       headerLeft = (
         <HeaderLeft
           navigation={this.props.navigation}
@@ -168,7 +183,7 @@ export default class HomeScreen extends React.Component {
           <View style={[styles.cover, coverStyles]}>
             <Image
               style={styles.image}
-              source={require("../assets/macbook.jpg")}
+              source={require("../assets/macbook2.jpg")}
               resizeMode="cover"
             />
             <View
@@ -182,9 +197,9 @@ export default class HomeScreen extends React.Component {
               </Text>
             </View>
           </View>
-          <Text style={styles.something}>Browse Categories</Text>
+          <Text style={styles.label}>Browse Categories</Text>
           <GridView
-            itemDimension={150}
+            itemDimension={Dimensions.get("window").width / 3}
             items={categories}
             style={styles.gridView}
             spacing={10}
@@ -195,6 +210,7 @@ export default class HomeScreen extends React.Component {
                     source={cat.source}
                     title={cat.name}
                     type="cat"
+                    screen={cat.screen}
                     navigation={this.props.navigation}
                     onPress={() => {
                       //console.log(item.name);
@@ -204,6 +220,15 @@ export default class HomeScreen extends React.Component {
               </View>
             )}
           />
+          <TouchableOpacity
+            style={styles.gifts}
+            onPress={() => {
+              this.props.navigation.navigate("Gifts");
+            }}
+          >
+            <Text style={styles.label}>Or shop </Text>
+            <Text style={[styles.label, { fontFamily: "normal" }]}>Gifts</Text>
+          </TouchableOpacity>
         </ScrollView>
         <SafeAreaView style={styles.safeArea}>{headerLeft}</SafeAreaView>
       </View>
